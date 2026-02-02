@@ -1,0 +1,30 @@
+.ordrhstr {
+  text-align: center;
+  margin-top: 70px;
+  font-size: 30px;
+  font-weight: bold;
+}
+.orderHistory {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+#cartHstr {
+  align-items: center;
+  margin-top: 20px;
+  margin: auto;
+}
+.cartItem {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  align-items: center;
+  width: 1100px;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #ddd;
+}
+.cartItem img { 
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
