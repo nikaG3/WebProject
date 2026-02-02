@@ -1,13 +1,12 @@
-const hamMenuBtn = document.querySelector(".hamMenu")
-const offScreen = document.querySelector(".offScreen")
+const hamMenuBtn = document.querySelector(".hamMenu");
+const offScreen = document.querySelector(".offScreen");
 
 hamMenuBtn.addEventListener("click", () => {
-hamMenuBtn.classList.toggle("active")
-offScreen.classList.toggle("active")
-})
+  hamMenuBtn.classList.toggle("active");
+  offScreen.classList.toggle("active");
+});
 
 const signInBtn = document.querySelector(".signIn");
-
 
 let selectedCategory = null;
 let categories = [];
@@ -99,7 +98,6 @@ function applyFilters() {
   filters.noNuts = document.getElementById("noNutsFilter").checked;
   filters.vegetarianOnly = document.getElementById("vegetarianFilter").checked;
 
-  // Build query params
   const params = new URLSearchParams();
   if (selectedCategory !== null) params.append("categoryId", selectedCategory);
   if (filters.spiciness !== null) params.append("spiciness", filters.spiciness);
@@ -128,11 +126,9 @@ function resetFilters() {
   loadProducts();
 }
 
-// Setup Filter Listeners
 function setupFilterListeners() {
   const spicinessFilter = document.getElementById("spicinessFilter");
   const spicinessValue = document.getElementById("spicinessValue");
-  
 
   spicinessFilter.addEventListener("input", (e) => {
     const val = parseInt(e.target.value);
@@ -141,53 +137,57 @@ function setupFilterListeners() {
 }
 
 function addToCart(productId, price) {
-  const btn = event.target;
-  btn.disabled = true;
-  btn.textContent = "Adding...";
+  if (Cookies.get("user")) {
+    const btn = event.target;
+    btn.disabled = true;
+    btn.textContent = "Adding...";
 
-  const isInCart = cartItems.find((item) => item.product.id === productId);
-  if (isInCart) {
-    fetch(`https://restaurant.stepprojects.ge/api/Baskets/UpdateBasket`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        productId: productId,
-        quantity: isInCart.quantity + 1,
-        price: price,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        loadCart();
-        btn.textContent = "Added!";
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.textContent = "Add to cart";
-        }, 1000);
-      });
+    const isInCart = cartItems.find((item) => item.product.id === productId);
+    if (isInCart) {
+      fetch(`https://restaurant.stepprojects.ge/api/Baskets/UpdateBasket`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: productId,
+          quantity: isInCart.quantity + 1,
+          price: price,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          loadCart();
+          btn.textContent = "Added!";
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = "Add to cart";
+          }, 1000);
+        });
+    } else {
+      fetch(`https://restaurant.stepprojects.ge/api/Baskets/AddToBasket`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          productId: productId,
+          quantity: 1,
+          price: price,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          loadCart();
+          btn.textContent = "Added!";
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = "Add to cart";
+          }, 1000);
+        });
+    }
   } else {
-    fetch(`https://restaurant.stepprojects.ge/api/Baskets/AddToBasket`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        productId: productId,
-        quantity: 1,
-        price: price,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        loadCart();
-        btn.textContent = "Added!";
-        setTimeout(() => {
-          btn.disabled = false;
-          btn.textContent = "Add to cart";
-        }, 1000);
-      });
+    alert("Log in first")
   }
 }
 

@@ -65,7 +65,6 @@ function register(e) {
 }
 
 function login(e) {
-  //   loginSms.style.display = "none";
   e.preventDefault();
 
   const email = document.getElementById("email").value;
@@ -86,20 +85,6 @@ function login(e) {
     .then((data) => {
       Cookies.set("user", data.access_token);
       gotoProfile();
-
-      //   if (data.access_token) {
-      //     loginSms.style.display = "block";
-      //     loginSms.innerText = "avtorizacia warmatebulia";
-      //     loginSms.style.color = "green";
-      //   } else if (data.error) {
-      //     loginSms.style.display = "block";
-      //     loginSms.innerText = data.error;
-      //     loginSms.style.color = "red";
-      //   }
-
-      //   setTimeout(() => {
-      //     loginSms.style.display = "none";
-      //   }, 1000);
     });
 }
 
@@ -121,11 +106,10 @@ const password = document.querySelector("#password");
 
 if (togglePassword && password) {
   togglePassword.addEventListener("click", function (e) {
-    // Toggle the type attribute
+
     const type =
       password.getAttribute("type") === "password" ? "text" : "password";
     password.setAttribute("type", type);
-    // Toggle the eye / eye-slash icon
     this.classList.toggle("fa-eye-slash");
   });
 }
@@ -137,13 +121,11 @@ const passwordRegister = document.getElementById("password-register");
 
 if (togglePasswordRegister && passwordRegister) {
   togglePasswordRegister.addEventListener("click", function (e) {
-    // Toggle the type attribute
     const type =
       passwordRegister.getAttribute("type") === "password"
         ? "text"
         : "password";
     passwordRegister.setAttribute("type", type);
-    // Toggle the eye / eye-slash icon
     this.classList.toggle("fa-eye-slash");
   });
 }
@@ -156,7 +138,6 @@ if (Cookies.get("user")) {
     logOut();
   };
 } else {
-  //   signInButton.innerText = "Sign In";
   signInButton.children[0].innerText = "Sign In";
   signInButton.onclick = function () {
     openSignIn();

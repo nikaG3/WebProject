@@ -129,6 +129,23 @@ body {
 #categories {
   gap: 10px;
 }
+.category-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  color: #333;
+  transition: all 0.3s ease;
+}
+.category-btn:hover {
+  background-color: #e0e0e0;
+}
+.category-btn.active {
+  background-color: #e80f0e;
+  color: white;
+}
 .home {
   display: flex;
   gap: 20px;

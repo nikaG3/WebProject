@@ -10,7 +10,6 @@ let cart = document.getElementById("cart");
 let cartItems = [];
 
 function renderCart() {
-  // cart.innerHTML = "";
   cartItems.forEach((item) => (cart.innerHTML += cartList(item)));
 }
 
@@ -139,7 +138,7 @@ function checkout() {
     0,
   );
 
-  // delete all items from server cart
+  
   Promise.all(
     cartItems.map((item) =>
       fetch(
@@ -154,7 +153,7 @@ function checkout() {
     alert(`Thank you for your order! Total: $${total}`);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
-    // clear UI
+    
     cartItems = [];
     cart.innerHTML = "";
     updateCartTotalPrice();
